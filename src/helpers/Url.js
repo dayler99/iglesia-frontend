@@ -1,1 +1,1 @@
-export const urlPhpMicroservicio = 'http://192.168.0.7:82/api/';
+export const urlPhpMicroservicio = 'http://10.29.8.3:8000/api/';

@@ -20,6 +20,12 @@ export default function Navbar() {
             <a className="nav-link text-color-default" href="#">Gestionar ministerio</a>
           </li>
           <li className="nav-item">
+            <a className="nav-link text-color-default" href="/actividad/list">Gestionar Actividad</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link text-color-default" href="/ingreso/list">Gestionar Ingreso</a>
+          </li>
+          <li className="nav-item">
             <a className="nav-link text-color-default" aria-disabled="true">Disabled</a>
           </li>
         </ul>
