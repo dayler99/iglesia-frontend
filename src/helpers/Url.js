@@ -1,3 +1,3 @@
-export const urlPhpMicroservicio = 'http://192.168.0.8:82/api/';
-export const urlPythonMicroservicio = 'http://192.168.0.8:5000/';
-export const urlNodeMicroservicio = 'http://192.168.0.8:83/';
+export const urlPhpMicroservicio = 'http://ec2-18-118-30-90.us-east-2.compute.amazonaws.com/api/';
+export const urlPythonMicroservicio = 'http://159.223.146.131:5000/';
+export const urlNodeMicroservicio = 'https://iglesia-node.uw.r.appspot.com/';

@@ -2,29 +2,35 @@ import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from "react-router-dom"
 import Swal from 'sweetalert2'
 import axios from 'axios'
-import Layout from "../components/Layout"
-import NavSidebar from '../components/NavSidebar'
-import {urlPhpMicroservicio} from './../helpers/Url';
+import Layout from "../../components/Layout"
+import NavSidebar from '../../components/NavSidebar'
+import { urlPhpMicroservicio } from '../../helpers/Url';
+
+
 function ProjectList() {
+
     const navigate = useNavigate();
-    const [miembroList, setMiembroList] = useState([])
+    const [actividadList, setActividad] = useState([])
 
     useEffect(() => {
         if (localStorage.getItem('token') == null) {
             navigate("/");
         }
-        fetchProjectList()
+        fetchProjectList();
+
     }, [])
 
+
+
     const axiosInstance = axios.create({
-        baseURL: `${urlPhpMicroservicio}miembro/`,
+        baseURL: `${urlPhpMicroservicio}actividad/`,
     });
 
 
     const fetchProjectList = () => {
         axiosInstance.get('/listar')
             .then(function (response) {
-                setMiembroList(response.data.data);
+                setActividad(response.data.data);
             })
             .catch(function (error) {
                 console.log(error);
@@ -46,7 +52,7 @@ function ProjectList() {
                     .then(function (response) {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Project deleted successfully!',
+                            title: 'Actividad deleted successfully!',
                             showConfirmButton: false,
                             timer: 1500
                         })
@@ -67,47 +73,64 @@ function ProjectList() {
     const Logout = () => {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
-        localStorage.removeItem("tipo");
         navigate("/");
     }
-
     return (
         <NavSidebar>
             <Layout>
                 <div className="container">
-                    <h2 className="text-center mt-5 mb-3">Gestionar miembro</h2>
+                    <h3 className="text-start mt-5 mb-3">Gestionar Actividad</h3>
                     <div className="card">
                         <div className="card-header">
-                            <Link className="btn btn-outline-primary" to="/miembro/create">Crear miembro </Link>
+                            <Link className="btn btn-outline-primary" to="/actividad/create">Crear Actividad </Link>
                             <button onClick={() => Logout()} className="btn btn-outline-danger float-end"> Logout </button>
                         </div>
                         <div className="card-body">
 
-                            <table className="table table-bordered">
+                            <table className="table table-bordered table-striped" id="tabla-actividad">
                                 <thead>
                                     <tr>
+
                                         <th>Nombre</th>
-                                        <th>Apellido</th>
+                                        <th>fecha</th>
+                                        <th>Hora Inicio</th>
+                                        <th>Hora Fin</th>
+                                        <th>Recaudación</th>
                                         <th width="240px">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {miembroList.map((miembro, key) => {
+                                    {actividadList.map((actividad, key) => {
                                         return (
                                             <tr key={key}>
-                                                <td>{miembro.nombre}</td>
-                                                <td>{miembro.apellido}</td>
+
+                                                <td>{actividad.nombre}</td>
+                                                <td>{actividad.fecha}</td>
+                                                <td>{actividad.horainicio}</td>
+                                                <td>{actividad.horafin}</td>
+                                                <td>{actividad.montototal}</td>
                                                 <td>
                                                     <Link
                                                         className="btn btn-outline-success mx-1"
-                                                        to={`/miembro/edit/${miembro.id}`}>
+                                                        to={`/actividad/edit/${actividad.id}`}>
                                                         Editar
                                                     </Link>
                                                     <button
-                                                        onClick={() => handleDelete(miembro.id)}
+                                                        onClick={() => handleDelete(actividad.id)}
                                                         className="btn btn-outline-danger mx-1">
                                                         Eliminar
                                                     </button>
+                                                    <Link
+                                                        className="btn btn-outline-success mx-1"
+                                                        to={`/actividad/asistencia/${actividad.id}/${actividad.nombre}`}>
+                                                        Asistencia
+                                                    </Link>
+
+                                                    <Link
+                                                        className="btn btn-outline-success mx-1"
+                                                        to={`/actividad/recaudacion/${actividad.id}/${actividad.nombre}`}>
+                                                        Recaudación
+                                                    </Link>
                                                 </td>
                                             </tr>
                                         )
@@ -119,8 +142,7 @@ function ProjectList() {
                 </div>
             </Layout>
         </NavSidebar>
-        
+
     );
 }
-
 export default ProjectList;
