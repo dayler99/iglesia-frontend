@@ -67,6 +67,7 @@ function ProjectList() {
     const Logout = () => {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
+        localStorage.removeItem("tipo");
         navigate("/");
     }
 

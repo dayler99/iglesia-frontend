@@ -4,11 +4,13 @@ import Swal from 'sweetalert2'
 import axios from 'axios'
 import Layout from "../components/Layout"
 import NavSidebar from '../components/NavSidebar'
+import {urlPhpMicroservicio} from './../helpers/Url';
 function Login() {
     const navigate = useNavigate();
-    const [email, setEmail] = useState('admin');
-    const [password, setPassword] = useState('11')
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('')
     const [isSaving, setIsSaving] = useState(false);
+    const [usuario, setUsuario] = useState('Miembro');
 
     useEffect(() => {
         if (localStorage.getItem('user') && localStorage.getItem('user') != null) {
@@ -16,8 +18,8 @@ function Login() {
         }
     }, [])
 
-    const instance = axios.create({
-        baseURL: 'https://dummyjson.com/',
+    const axiosInstance = axios.create({
+        baseURL: `${urlPhpMicroservicio}`,
     });
 
     const handleSave = () => {
@@ -26,34 +28,66 @@ function Login() {
         setIsSaving(true);
         var em = email === 'admin' ? 'kminchelle' : email;
         var pas = password === '11' ? '0lelplR' : password;
-
-        instance.post('/auth/login', {
-            username: em,
-            password: pas
-        })
-            .then(function (response) {
-                localStorage.setItem("user", JSON.stringify(response.data));
-                localStorage.setItem("token", response.data.token);
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Login successfully!',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-                navigate("/dashboard");
-                setIsSaving(false);
-                setEmail('')
-                setPassword('')
+        if(usuario === 'Miembro'){
+            axiosInstance.post('/loginMiembro', {
+                email: em,
+                password: pas
             })
-            .catch(function (error) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'An Error Occured!',
-                    showConfirmButton: false,
-                    timer: 1500
+                .then(function (response) {
+                    localStorage.setItem("user", JSON.stringify(response.data.data));
+                    localStorage.setItem("token", response.data.data.id);
+                    localStorage.setItem("tipo", 'Miembro');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Login successfully!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    navigate("/sermonMiembro");
+                    setIsSaving(false);
+                    setEmail('')
+                    setPassword('')
                 })
-                setIsSaving(false)
-            });
+                .catch(function (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'An Error Occured!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    setIsSaving(false)
+                });
+        }else{
+            axiosInstance.post('/login', {
+                email: em,
+                password: pas
+            })
+                .then(function (response) {
+                    localStorage.setItem("user", JSON.stringify(response.data.data));
+                    localStorage.setItem("token", response.data.data.id);
+                    localStorage.setItem("tipo", 'Administrador');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Login successfully!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    navigate("/bi");
+                    setIsSaving(false);
+                    setEmail('')
+                    setPassword('')
+                })
+                .catch(function (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'An Error Occured!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    setIsSaving(false)
+                });
+        }
+        
     }
 
     return (
@@ -73,8 +107,6 @@ function Login() {
                                                 type="email"
                                                 className="form-control"
                                                 id="floatingInput"
-                                                placeholder="name@example.com"
-                                                value="admin"
                                             />
                                             <label htmlFor="floatingInput">Email address</label>
                                         </div>
@@ -85,8 +117,6 @@ function Login() {
                                                 type="password"
                                                 className="form-control"
                                                 id="floatingPassword"
-                                                placeholder="Password"
-                                                value="11"
                                             />
                                             <label htmlFor="floatingPassword">Password</label>
                                         </div>
@@ -99,6 +129,19 @@ function Login() {
                                                 className="btn btn-primary btn-login text-uppercase fw-bold" >
                                                 Sign in
                                             </button>
+                                        </div>
+                                        <div className="d-grid">
+                                            <label htmlFor="sexo">Tipo de usuario</label>
+                                            <select
+                                                onChange={(event) => { setUsuario(event.target.value) }}
+                                                value={usuario}
+                                                type="text"
+                                                className="form-control"
+                                                id="usuario"
+                                                name="usuario" >
+                                                    <option value="Miembro">Miembro</option>
+                                                    <option value="Administrador">Administrador</option>
+                                            </select>
                                         </div>
                                         <hr className="my-4"></hr>
 
