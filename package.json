@@ -46,11 +46,7 @@
     ]
   },
   "devDependencies": {
-    "eslint-plugin-react": "^7.33.2"
-  },
-  {
-    "engines": {
-      "npm": "~1.0.20"
-    }
+    "eslint-plugin-react": "^7.33.2",
+    "gh-pages": "^6.1.0"
   }
 }
