@@ -106,7 +106,7 @@ function ProjectList() {
                                     name="ingreso_id" >
                                     {ingresoList.map((ingreso, key) => {
                                         return (
-                                            <option value={ingreso.id}>{ingreso.nombre}</option>
+                                            <option key={key} value={ingreso.id}>{ingreso.nombre}</option>
                                         )
                                     })}
                                 </select>

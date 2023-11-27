@@ -117,17 +117,6 @@ function ProjectEdit() {
                                                         className="btn btn-outline-danger mx-1">
                                                         Eliminar
                                                     </button>
-
-                                                    {/*</tr> <Link
-                                                        className="btn btn-outline-success mx-1"
-                                                        to={`/actividad/asistencia/${actividad.id}`}>
-                                                        Asistencia
-                                                    </Link>
-                                                    <Link
-                                                        className="btn btn-outline-success mx-1"
-                                                        to={`/actividad/recaudacion/${actividad.id}`}>
-                                                        Recaudación
-                                                    </Link> */}
                                                 </td>
                                             </tr>
                                         )
