@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useParams, useNavigate } from "react-router-dom"
 import Swal from 'sweetalert2'
 import axios from 'axios'
 import Layout from "../../components/Layout"
-import NavSidebar from '../../components/NavSidebar'
 import { urlPhpMicroservicio } from '../../helpers/Url';
+import NavSidebar from '../../components/NavSidebar'
 
-
-function ProjectList() {
-
+function ProjectEdit() {
+    const { id, nombre } = useParams();
     const navigate = useNavigate();
-    const [actividadList, setActividad] = useState([])
+    const [recaudacionList, setRecaudacion] = useState([])
 
     useEffect(() => {
         if (localStorage.getItem('token') == null) {
@@ -20,39 +19,41 @@ function ProjectList() {
 
     }, [])
 
-
-
     const axiosInstance = axios.create({
-        baseURL: `${urlPhpMicroservicio}actividad/`,
+        baseURL: `${urlPhpMicroservicio}recaudacion/`,
     });
 
-
+    const Logout = () => {
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        navigate("/");
+    }
     const fetchProjectList = () => {
-        axiosInstance.get('/listar')
+        axiosInstance.get(`actividad/${id}`)
             .then(function (response) {
-                setActividad(response.data.data);
+                setRecaudacion(response.data.data);
             })
             .catch(function (error) {
                 console.log(error);
             })
     }
 
-    const handleDelete = (id) => {
+    const handleDelete = (actividad_id, ingreso_id) => {
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: 'Está seguro?',
+            text: "No podrás revertir esto.!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Sí, eliminalo!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosInstance.delete(`/eliminar/${id}`)
+                axiosInstance.post(`/eliminar`, { actividad_id: actividad_id, ingreso_id: ingreso_id })
                     .then(function (response) {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Actividad deleted successfully!',
+                            title: 'Recaudación eliminada exitosamente!',
                             showConfirmButton: false,
                             timer: 1500
                         })
@@ -61,7 +62,7 @@ function ProjectList() {
                     .catch(function (error) {
                         Swal.fire({
                             icon: 'error',
-                            title: 'An Error Occured!',
+                            title: `${error}`,
                             showConfirmButton: false,
                             timer: 1500
                         })
@@ -70,67 +71,63 @@ function ProjectList() {
         })
     }
 
-    const Logout = () => {
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
-        navigate("/");
-    }
     return (
         <NavSidebar>
             <Layout>
                 <div className="container">
-                    <h3 className="text-start mt-5 mb-3">Gestionar Actividad</h3>
+                    <h3 className="text-start mt-5 mb-3">Recaudación {nombre}</h3>
                     <div className="card">
                         <div className="card-header">
-                            <Link className="btn btn-outline-primary" to="/actividad/create">Crear Actividad </Link>
+                            <Link
+                                className="btn btn-outline-info float-right"
+                                to={`/actividad/list`}>Volver
+                            </Link>
+                            <Link className="btn btn-outline-success mx-1"
+                                to={`/recaudacion/create/${id}/${nombre}`}>
+                                Registrar recaudacion
+                            </Link>
+
                             <button onClick={() => Logout()} className="btn btn-outline-danger float-end"> Logout </button>
                         </div>
                         <div className="card-body">
 
-                            <table className="table table-bordered table-striped" id="tabla-actividad">
+                            <table className="table table-bordered table-striped" id="tabla-recaudacion">
                                 <thead>
                                     <tr>
-
-                                        <th>Nombre</th>
-                                        <th>fecha</th>
-                                        <th>Hora Inicio</th>
-                                        <th>Hora Fin</th>
-                                        <th>Recaudación</th>
+                                        <th>Id</th>
+                                        <th>Ingreso</th>
+                                        <th>Monto</th>
+                                        <th>Actualización</th>
                                         <th width="240px">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {actividadList.map((actividad, key) => {
+                                    {recaudacionList.map((recaudacion, key) => {
                                         return (
                                             <tr key={key}>
 
-                                                <td>{actividad.nombre}</td>
-                                                <td>{actividad.fecha}</td>
-                                                <td>{actividad.horainicio}</td>
-                                                <td>{actividad.horafin}</td>
-                                                <td>{actividad.montototal}</td>
+                                                <td>{recaudacion.id}</td>
+                                                <td>{recaudacion.nombre}</td>
+                                                <td>{recaudacion.pivot['monto']}</td>
+                                                <td>{(new Date(recaudacion.pivot['updated_at'])).toLocaleDateString("es-ES",{ day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</td>
                                                 <td>
-                                                    <Link
-                                                        className="btn btn-outline-success mx-1"
-                                                        to={`/actividad/edit/${actividad.id}`}>
-                                                        Editar
-                                                    </Link>
+
                                                     <button
-                                                        onClick={() => handleDelete(actividad.id)}
+                                                        onClick={() => handleDelete(recaudacion.pivot['actividad_id'], recaudacion.pivot['ingreso_id'])}
                                                         className="btn btn-outline-danger mx-1">
                                                         Eliminar
                                                     </button>
-                                                    <Link
+
+                                                    {/*</tr> <Link
                                                         className="btn btn-outline-success mx-1"
-                                                        to={`/actividad/asistencia/${actividad.id}/${actividad.nombre}`}>
+                                                        to={`/actividad/asistencia/${actividad.id}`}>
                                                         Asistencia
                                                     </Link>
-
                                                     <Link
                                                         className="btn btn-outline-success mx-1"
-                                                        to={`/actividad/recaudacion/${actividad.id}/${actividad.nombre}`}>
+                                                        to={`/actividad/recaudacion/${actividad.id}`}>
                                                         Recaudación
-                                                    </Link>
+                                                    </Link> */}
                                                 </td>
                                             </tr>
                                         )
@@ -145,4 +142,5 @@ function ProjectList() {
 
     );
 }
-export default ProjectList;
+
+export default ProjectEdit;

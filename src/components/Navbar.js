@@ -4,7 +4,9 @@ export default function Navbar() {
   return (
     <nav className="navbar-default navbar navbar-expand-lg bg-body-tertiary">
     <div className="container-fluid">
-      <a className="navbar-brand text-color-default" href="#">Navbar</a>
+    <a className="navbar-brand text-color-default" href="/dashboard">
+        <img src="/logo_church.png" alt="Logo" style={{width: '50px'}} /> {/* Añade tu logo aquí */}
+      </a>
       <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>
@@ -13,21 +15,21 @@ export default function Navbar() {
           <li className="nav-item">
             <a className="nav-link text-color-default" aria-current="page" href="/dashboard">Gestionar miembro</a>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <a className="nav-link text-color-default" href="#">Gestionar visitante</a>
           </li>
           <li className="nav-item">
             <a className="nav-link text-color-default" href="#">Gestionar ministerio</a>
-          </li>
+          </li> */}
           <li className="nav-item">
             <a className="nav-link text-color-default" href="/actividad/list">Gestionar Actividad</a>
           </li>
           <li className="nav-item">
             <a className="nav-link text-color-default" href="/ingreso/list">Gestionar Ingreso</a>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <a className="nav-link text-color-default" aria-disabled="true">Disabled</a>
-          </li>
+          </li> */}
         </ul>
       </div>
     </div>

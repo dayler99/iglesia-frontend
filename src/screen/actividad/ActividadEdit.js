@@ -80,12 +80,12 @@ function ProjectEdit() {
     return (
         <Layout>
             <div className="container">
-                <h2 className="text-center mt-5 mb-3">Editar actividad</h2>
+                <h2 className="text-start mt-5 mb-3">Editar actividad</h2>
                 <div className="card">
                     <div className="card-header">
                         <Link
                             className="btn btn-outline-info float-right"
-                            to="/actividad/list">Gestionar Actividad
+                            to="/actividad/list">Volver
                         </Link>
                     </div>
                     <div className="card-body">
@@ -135,7 +135,7 @@ function ProjectEdit() {
                                 onClick={handleSave}
                                 type="button"
                                 className="btn btn-outline-success mt-3">
-                                Update Actividad
+                                Actualizar Actividad
                             </button>
                         </form>
                     </div>

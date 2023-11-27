@@ -87,7 +87,7 @@ function ProjectList() {
                                     <tr>
                                         <th>Nombre</th>
                                         <th>Apellido</th>
-                                        <th width="240px">Accionees</th>
+                                        <th width="240px">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -100,12 +100,12 @@ function ProjectList() {
                                                     <Link
                                                         className="btn btn-outline-success mx-1"
                                                         to={`/miembro/edit/${miembro.id}`}>
-                                                        Edit
+                                                        Editar
                                                     </Link>
                                                     <button
                                                         onClick={() => handleDelete(miembro.id)}
                                                         className="btn btn-outline-danger mx-1">
-                                                        Delete
+                                                        Eliminar
                                                     </button>
                                                 </td>
                                             </tr>

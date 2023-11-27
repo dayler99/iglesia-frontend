@@ -73,12 +73,12 @@ function ProjectCreate() {
     return (
         <Layout>
             <div className="container">
-                <h2 className="text-center mt-5 mb-3">Crear nuevo miembro</h2>
+                <h2 className="text-start mt-5 mb-3">Crear nuevo miembro</h2>
                 <div className="card">
                     <div className="card-header">
                         <Link
                             className="btn btn-outline-info float-right"
-                            to="/dashboard">Gestionar miembro
+                            to="/dashboard">Volver
                         </Link>
                     </div>
                     <div className="card-body">

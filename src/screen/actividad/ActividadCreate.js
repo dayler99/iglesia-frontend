@@ -61,12 +61,12 @@ function ProjectList() {
     return (
         <Layout>
             <div className="container">
-                <h2 className="text-center mt-5 mb-3">Crear nueva actividad</h2>
+                <h2 className="text-start mt-5 mb-3">Crear nueva actividad</h2>
                 <div className="card">
                     <div className="card-header">
                         <Link
                             className="btn btn-outline-info float-right"
-                            to="/actividad/list">Gestionar actividad
+                            to="/actividad/list">Volver
                         </Link>
                     </div>
                     <div className="card-body">
@@ -117,7 +117,7 @@ function ProjectList() {
                                 onClick={handleSave}
                                 type="button"
                                 className="btn btn-outline-primary mt-3">
-                                Guardar Actividad
+                                Registrar Actividad
                             </button>
                         </form>
                     </div>
