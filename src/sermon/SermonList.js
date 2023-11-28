@@ -112,7 +112,7 @@ function SermonList() {
                       <td>{sermon.name}</td>
                       <td>
                         <img
-                          src={sermon.file}
+                          src="/misa.jpg"
                           alt={`${sermon.name}`}
                           style={{ maxWidth: '100px', maxHeight: '100px' }}
                         />

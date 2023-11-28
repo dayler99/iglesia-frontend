@@ -54,7 +54,7 @@ function SermonMiembroList() {
                 <div key={sermon._id} className="mb-4">
                   <div className="card">
                     <img
-                      src={sermon.file}
+                          src="/misa.jpg"
                       alt={sermon.name}
                       className="card-img-top"
                       style={{ objectFit: 'cover', height: '200px' }}

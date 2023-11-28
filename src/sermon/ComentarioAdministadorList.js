@@ -12,6 +12,7 @@ function ComentarioAdministradorList() {
   const [isSaving, setIsSaving] = useState(false);
   const [descripcion, setDescripcion] = useState('');
   const [sermonList, setSermonList] = useState([]);
+  const [promedio, setPromedio] = useState(0);
 
   useEffect(() => {
     if (localStorage.getItem('token') == null) {
@@ -64,6 +65,7 @@ function ComentarioAdministradorList() {
       })
       .then(function (response) {
         setSermonList(response.data.body);
+        setPromedio(calcularPromedio(response.data.body));
         
       })
       .catch(function (error) {
@@ -71,7 +73,12 @@ function ComentarioAdministradorList() {
       });
   };
 
-
+  const calcularPromedio = (array) => {
+    const valores = array.map((item) => parseInt(item.valor, 10) || 0);
+    const suma = valores.reduce((acc, valor) => acc + valor, 0);
+    const promedio = valores.length > 0 ? suma / valores.length : 0;
+    return promedio;
+  };
   const Logout = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
@@ -94,27 +101,8 @@ function ComentarioAdministradorList() {
               </button>
             </div>
             <div className="card-body">
-            <form>
-              <div className="form-group">
-                  <label htmlFor="descripcion">Descripcion</label>
-                  <textarea
-                      onChange={(event) => { setDescripcion(event.target.value) }}
-                      value={descripcion}
-                      type="text"
-                      className="form-control"
-                      id="descripcion"
-                      name="descripcion" />
-              </div>
-              
-              <button
-                  disabled={isSaving}
-                  onClick={handleSave}
-                  type="button"
-                  className="btn btn-outline-primary mt-3">
-                  Enviar comentario
-              </button>
-          </form>
-          <h3> PROMEDIO DE CALIFICACION DEL SERMON ES  : </h3>
+            
+          <h3> PROMEDIO DE CALIFICACION DEL SERMON ES  : {promedio}</h3>
               <table className="table table-bordered">
                 <thead>
                   <tr>
