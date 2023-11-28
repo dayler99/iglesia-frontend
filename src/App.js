@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route ,BrowserRouter} from "react-router-dom"
 import MiembroList from "./miembro/MiembroList"
 import MiembroCreate from "./miembro/MiembroCreate"
 import MiembroEdit from "./miembro/MiembroEdit"
@@ -25,7 +25,7 @@ import ComentarioAdministradorList from './sermon/ComentarioAdministadorList';
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter basename="/">
       <Routes>
         <Route exact path="/" element={<Login />} />
         <Route exact path="/signup" element={<Registration />} />
@@ -55,7 +55,7 @@ function App() {
         <Route path="recaudacion/create/:id/:nombre" element={<RecaudacionCreate />} />
         <Route path="asistencia/create/:id/:nombre" element={<AsistenciaCreate />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
 

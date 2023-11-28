@@ -26,6 +26,7 @@ function ProjectEdit() {
     const Logout = () => {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
+        localStorage.removeItem("tipo");
         navigate("/");
     }
     const fetchProjectList = () => {

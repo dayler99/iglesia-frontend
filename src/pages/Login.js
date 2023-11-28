@@ -4,7 +4,7 @@ import Swal from 'sweetalert2'
 import axios from 'axios'
 import Layout from "../components/Layout"
 import NavSidebar from '../components/NavSidebar'
-import {urlPhpMicroservicio} from './../helpers/Url';
+import {urlPhpMicroservicio,urlPythonMicroservicio} from './../helpers/Url';
 function Login() {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
@@ -18,10 +18,12 @@ function Login() {
         }
     }, [])
 
-    const axiosInstance = axios.create({
+    const axiosInstancePhp = axios.create({
         baseURL: `${urlPhpMicroservicio}`,
     });
-
+    const axiosInstancePython = axios.create({
+        baseURL: `${urlPythonMicroservicio}`,
+    });
     const handleSave = () => {
         /* kminchelle */
         /* 0lelplR */
@@ -29,7 +31,7 @@ function Login() {
         var em = email === 'admin' ? 'kminchelle' : email;
         var pas = password === '11' ? '0lelplR' : password;
         if(usuario === 'Miembro'){
-            axiosInstance.post('/loginMiembro', {
+            axiosInstancePhp.post('/loginMiembro', {
                 email: em,
                 password: pas
             })
@@ -58,9 +60,14 @@ function Login() {
                     setIsSaving(false)
                 });
         }else{
-            axiosInstance.post('/login', {
+            axiosInstancePython.post('/login', {
                 email: em,
                 password: pas
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
             })
                 .then(function (response) {
                     localStorage.setItem("user", JSON.stringify(response.data.data));
