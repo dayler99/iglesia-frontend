@@ -1,4 +1,4 @@
-export const urlPhpMicroservicio = 'http://ec2-18-118-30-90.us-east-2.compute.amazonaws.com/api/';
+export const urlPhpMicroservicio = 'http://107.20.34.206/api/';
 //export const urlPythonMicroservicio = 'http://192.168.0.8:5000/';
-export const urlPythonMicroservicio = 'http://159.223.146.131:5001/';
-export const urlNodeMicroservicio = 'https://iglesia-node.uw.r.appspot.com/';
+export const urlPythonMicroservicio = 'http://64.23.148.139/';
+export const urlNodeMicroservicio = 'https://proyecto-iglesia-410014.ue.r.appspot.com/';
